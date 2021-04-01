@@ -46,7 +46,6 @@ public class RandomCharacters {
      * the same value as the chosen character.
      */
     private char matchParentCharacter() {
-        Random randomChar = new Random();
         int chosen = randomChar.nextInt(5 - 1) + 1;
         char parent = ' ';
         switch ( chosen ) {
