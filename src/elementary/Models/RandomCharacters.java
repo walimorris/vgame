@@ -8,7 +8,7 @@ public class RandomCharacters {
     private final char C;
     private final char D;
     private final char uppercaseParent;
-    private final Random randomChar = new Random();
+    private final Random random = new Random();
 
     private final static char EMPTY = ' ';
 
@@ -33,7 +33,7 @@ public class RandomCharacters {
     private char findRandomChildCharacter(char first, char second, char third) {
         char primary;
         do {
-            primary = (char) ((char) randomChar.nextInt(LOWER_HIGH -
+            primary = (char) ((char) random.nextInt(LOWER_HIGH -
                     LOWER_LOW) + LOWER_LOW + 1);
         } while ( primary == first || primary == second || primary == third
                 || primary == EMPTY);
@@ -46,7 +46,7 @@ public class RandomCharacters {
      * the same value as the chosen character.
      */
     private char matchParentCharacter() {
-        int chosen = randomChar.nextInt(5 - 1) + 1;
+        int chosen = random.nextInt(5 - 1) + 1;
         char parent = ' ';
         switch ( chosen ) {
             case 1:

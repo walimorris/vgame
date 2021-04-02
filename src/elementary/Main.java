@@ -1,5 +1,6 @@
 package elementary;
 
+import elementary.Models.RandomWordPicker;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -7,14 +8,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundSize;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -52,7 +53,8 @@ public class Main extends Application {
          soundButtonView.setPreserveRatio(true);
 
          Button soundButton = new Button();
-         soundButton.setPrefSize(30, 30);
+         double radius = 30.5;
+         soundButton.setShape(new Circle(radius));
          soundButton.setGraphic(soundButtonView);
 
          A.setPrefSize(60, 40);
@@ -82,14 +84,26 @@ public class Main extends Application {
          Label label = new Label(String.valueOf(randomCharacterUppercase));
          label.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
 
+         /* Add word picker and input field */
+         HBox wordHBox = new HBox();
+         RandomWordPicker randomWordPicker = new RandomWordPicker();
+         String randomWord = randomWordPicker.getRandomWord(randomCharacterUppercase);
+         Label wordLabel = new Label(randomWord);
+         wordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 60));
+         TextField wordTextField = new TextField();
+         wordHBox.getChildren().addAll(wordLabel, wordTextField);
+         wordHBox.setSpacing(10);
+         wordHBox.setAlignment(Pos.CENTER);
+
          GridPane gridPane = new GridPane();
-         gridPane.addRow(0, label);
          gridPane.addRow(0, soundButton);
-         gridPane.addRow(1, choicesBar);
+         gridPane.addRow(1, label);
+         gridPane.addRow(2, wordHBox);
+         gridPane.addRow(3, choicesBar);
          gridPane.setAlignment(Pos.CENTER);
          GridPane.setHalignment(soundButton, HPos.RIGHT);
          GridPane.setHalignment(label, HPos.CENTER);
-         gridPane.setVgap(100);
+         gridPane.setVgap(50);
          gridPane.setHgap(5);
          gridPane.setBackground(new Background(bgImage));
 
@@ -129,6 +143,16 @@ public class Main extends Application {
              playParentLetter(label);
          });
 
+         wordTextField.setOnKeyPressed( event -> {
+             if (event.getCode() == KeyCode.ENTER) {
+                 if (wordTextField.getText().equalsIgnoreCase(wordLabel.getText())) {
+                     System.out.println("Correct");
+                 } else {
+                     System.out.println("Incorrect");
+                 }
+             }
+         });
+
          Scene scene = new Scene(gridPane, 1410.0,738.0);
          primaryStage.setTitle("Letters");
          primaryStage.setScene(scene);
@@ -155,6 +179,9 @@ public class Main extends Application {
             throws InterruptedException {
         if ( isEqualCharacters((char)b.getProperties().get(LETTER), c1)) {
             playCorrectAnswerSound();
+            if (x.get() != 0) {
+                x.getAndSet(0);
+            }
             resetAll(primaryStage);
         } else {
             x.addAndGet(1);
