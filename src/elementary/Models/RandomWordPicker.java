@@ -11,8 +11,8 @@ public class RandomWordPicker {
     private final Random random = new Random();
 
     public RandomWordPicker() {
-        words.put('A', new ArrayList<>(List.of("Apple", "Art", "Ant")));
-        words.put('B', new ArrayList<>(List.of("Bug", "Beaver", "Bag")));
+        words.put('A', new ArrayList<>(List.of("Apple", "Art", "Ant", "About")));
+        words.put('B', new ArrayList<>(List.of("Bug", "Beaver", "Bag", "")));
         words.put('C', new ArrayList<>(List.of("Cat", "Cake", "Cup")));
         words.put('D', new ArrayList<>(List.of("Dad", "Deer", "Dig")));
         words.put('E', new ArrayList<>(List.of("Eat", "Earth", "Ear")));

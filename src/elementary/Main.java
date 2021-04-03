@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import elementary.Models.RandomCharacters;
 
 import java.io.File;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main extends Application {
@@ -143,35 +144,58 @@ public class Main extends Application {
          gridPane.setHgap(5);
          gridPane.setBackground(new Background(bgImage));
 
+         // Event setup
+         AtomicBoolean wordSubmitted = new AtomicBoolean(false);
+
          A.setOnMouseClicked(event -> {
-             try {
-                 checkForAnswer(A, randomCharacterUppercase, x, primaryStage);
-             } catch (InterruptedException e) {
-                 e.printStackTrace();
+             if (wordSubmitted.get()) {
+                 try {
+                     checkForAnswer(A, randomCharacterUppercase, x, primaryStage);
+                 } catch (InterruptedException e) {
+                     e.printStackTrace();
+                 }
+             } else {
+                 // add animation to toggle arrow on word submission form
+                 event.consume();
              }
          });
 
          B.setOnMouseClicked(event -> {
-             try {
-                 checkForAnswer(B, randomCharacterUppercase, x, primaryStage);
-             } catch (InterruptedException e) {
-                 e.printStackTrace();
+             if (wordSubmitted.get()) {
+                 try {
+                     checkForAnswer(B, randomCharacterUppercase, x, primaryStage);
+                 } catch (InterruptedException e) {
+                     e.printStackTrace();
+                 }
+             } else {
+                 // add animation to toggle arrow on word submission form
+                 event.consume();
              }
          });
 
          C.setOnMouseClicked(event -> {
-             try {
-                 checkForAnswer(C, randomCharacterUppercase, x, primaryStage);
-             } catch (InterruptedException e) {
-                 e.printStackTrace();
+             if (wordSubmitted.get()) {
+                 try {
+                     checkForAnswer(C, randomCharacterUppercase, x, primaryStage);
+                 } catch (InterruptedException e) {
+                     e.printStackTrace();
+                 }
+             } else {
+                 // add animation to toggle arrow on word submission form
+                 event.consume();
              }
          });
 
          D.setOnMouseClicked(event -> {
-             try {
-                 checkForAnswer(D, randomCharacterUppercase, x, primaryStage);
-             } catch (InterruptedException e) {
-                 e.printStackTrace();
+             if (wordSubmitted.get()) {
+                 try {
+                     checkForAnswer(D, randomCharacterUppercase, x, primaryStage);
+                 } catch (InterruptedException e) {
+                     e.printStackTrace();
+                 }
+             } else {
+                 // add animation to toggle arrow on word submission form
+                 event.consume();
              }
          });
 
@@ -187,6 +211,7 @@ public class Main extends Application {
                      wordTextField.setEditable(false);
                      arrowView1.setVisible(false);
                      arrowView2.setVisible(true);
+                     wordSubmitted.set(true);
                  } else {
                      checkmarkView.setVisible(false);
                      wrongmarkView.setVisible(true);
