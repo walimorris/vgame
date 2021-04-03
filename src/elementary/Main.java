@@ -1,6 +1,8 @@
 package elementary;
 
 import elementary.Models.RandomWordPicker;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -21,6 +23,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import elementary.Models.RandomCharacters;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -156,6 +159,7 @@ public class Main extends Application {
                  }
              } else {
                  // add animation to toggle arrow on word submission form
+                 blink(arrowView1);
                  event.consume();
              }
          });
@@ -169,6 +173,7 @@ public class Main extends Application {
                  }
              } else {
                  // add animation to toggle arrow on word submission form
+                 blink(arrowView1);
                  event.consume();
              }
          });
@@ -182,6 +187,7 @@ public class Main extends Application {
                  }
              } else {
                  // add animation to toggle arrow on word submission form
+                 blink(arrowView1);
                  event.consume();
              }
          });
@@ -195,6 +201,7 @@ public class Main extends Application {
                  }
              } else {
                  // add animation to toggle arrow on word submission form
+                 blink(arrowView1);
                  event.consume();
              }
          });
@@ -305,6 +312,14 @@ public class Main extends Application {
      */
     public static boolean isEqualCharacters(char c, char c1) {
         return String.valueOf(c).equalsIgnoreCase(String.valueOf(c1));
+    }
+
+    public static void blink(ImageView image) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), image);
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+        fadeTransition.setCycleCount(10);
+        fadeTransition.play();
     }
 
      public static void main(String[] args) {
