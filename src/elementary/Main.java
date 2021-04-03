@@ -75,6 +75,7 @@ public class Main extends Application {
          ButtonBar.setButtonData(C, ButtonBar.ButtonData.APPLY);
          ButtonBar.setButtonData(D, ButtonBar.ButtonData.APPLY);
 
+
          choicesBar.getButtons().addAll(A, B, C, D);
          // <a href="https://www.vecteezy.com/free-vector/nature">Nature Vectors by Vecteezy</a>
          Image image = new Image("file:src/assets/backgrounds/bluesky.jpg");
@@ -90,16 +91,51 @@ public class Main extends Application {
          String randomWord = randomWordPicker.getRandomWord(randomCharacterUppercase);
          Label wordLabel = new Label(randomWord);
          wordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 60));
+
+         // red arrow visual 1
+         Image arrowImage1 = new Image("file:src/assets/icons/redarrow.png");
+         ImageView arrowView1 = new ImageView(arrowImage1);
+         arrowView1.setFitHeight(60);
+         arrowView1.setPreserveRatio(true);
+         arrowView1.setVisible(true);
+
+         // red arrow visual 2
+         Image arrowImage2 = new Image("file:src/assets/icons/redarrow.png");
+         ImageView arrowView2 = new ImageView(arrowImage2);
+         arrowView2.setFitHeight(60);
+         arrowView2.setPreserveRatio(true);
+         arrowView2.setVisible(false);
+
+         // correct visual
+         Image checkmarkImage = new Image("file:src/assets/icons/checkmark.png");
+         ImageView checkmarkView = new ImageView(checkmarkImage);
+         checkmarkView.setFitHeight(30);
+         checkmarkView.setPreserveRatio(true);
+         checkmarkView.setVisible(false);
+
+         // incorrect visual
+         Image wrongmarkImage = new Image("file:src/assets/icons/wrongmark.png");
+         ImageView wrongmarkView = new ImageView(wrongmarkImage);
+         wrongmarkView.setFitHeight(30);
+         wrongmarkView.setPreserveRatio(true);
+         wrongmarkView.setVisible(false);
+
          TextField wordTextField = new TextField();
-         wordHBox.getChildren().addAll(wordLabel, wordTextField);
+         wordHBox.getChildren().addAll(arrowView1, wordLabel, wordTextField, checkmarkView, wrongmarkView);
          wordHBox.setSpacing(10);
          wordHBox.setAlignment(Pos.CENTER);
+
+         HBox buttonBarBox = new HBox();
+         buttonBarBox.getChildren().addAll(arrowView2, choicesBar);
+         buttonBarBox.setSpacing(10);
+         buttonBarBox.setAlignment(Pos.CENTER);
+
 
          GridPane gridPane = new GridPane();
          gridPane.addRow(0, soundButton);
          gridPane.addRow(1, label);
          gridPane.addRow(2, wordHBox);
-         gridPane.addRow(3, choicesBar);
+         gridPane.addRow(3, buttonBarBox);
          gridPane.setAlignment(Pos.CENTER);
          GridPane.setHalignment(soundButton, HPos.RIGHT);
          GridPane.setHalignment(label, HPos.CENTER);
@@ -146,9 +182,14 @@ public class Main extends Application {
          wordTextField.setOnKeyPressed( event -> {
              if (event.getCode() == KeyCode.ENTER) {
                  if (wordTextField.getText().equalsIgnoreCase(wordLabel.getText())) {
-                     System.out.println("Correct");
+                     wrongmarkView.setVisible(false);
+                     checkmarkView.setVisible(true);
+                     wordTextField.setEditable(false);
+                     arrowView1.setVisible(false);
+                     arrowView2.setVisible(true);
                  } else {
-                     System.out.println("Incorrect");
+                     checkmarkView.setVisible(false);
+                     wrongmarkView.setVisible(true);
                  }
              }
          });
